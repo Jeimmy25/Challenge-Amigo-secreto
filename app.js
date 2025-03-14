@@ -9,17 +9,39 @@ function agregarAmigo() {
     if (nombre !== '') {
         //// Añadimos el nombre al arreglo de amigos
         amigos.push(nombre);
-    
-        // Creamos un elemento li para el nuevo amigo
-        let li = document.createElement('li');
-        li.textContent = nombre;
-        
-        // Agregamos el elemento li a la lista
-        listaAmigos.appendChild(li);
-        
-        // Limpiamos el campo de texto
+
         inputAmigo.value = '';
-      } else {
-        alert('Por favor, ingrese un nombre');
-      }
-    }
+    
+        actualizarLista ();
+       listaAmigos.innerHTML = " ";
+    } else {
+        alert ("Por favor, ingrese un nombre")
+   } 
+}
+
+
+
+
+     
+
+
+
+
+
+  
+        
+  
+  
+        
+  
+  
+
+
+  
+
+
+
+
+     
+
+ 
