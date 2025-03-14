@@ -19,12 +19,14 @@ function agregarAmigo() {
    } 
 }
 
-
-
-
-     
-
-
+function actualizarLista () {
+    listaAmigos.innerHTML = "";
+    for (let i = 0; i < amigos.length; i++) {
+        let li = document.createElement('li');
+        li.textContent = amigos[i];
+        listaAmigos.appendChild(li);
+    }
+}
 
 
 
