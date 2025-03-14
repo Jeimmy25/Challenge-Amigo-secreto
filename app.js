@@ -28,11 +28,15 @@ function actualizarLista () {
     }
 }
 
-
-
-  
-        
-  
+function sorterAmigo () {
+    if (amigos.length > 0) {
+        let indiceAleatorio = Math.floor(Math.random() * amigos.length);
+        let amigoSorteado = amigos[indiceAleatorio];
+        resultado.innerHTML = `Su amigo secreto es: ${amigoSorteado}`;
+  } else {
+    resultado.innerHTML = 'No hay amigos en la lista';
+  }
+}
   
         
   
