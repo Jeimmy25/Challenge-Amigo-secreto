@@ -28,7 +28,7 @@ function actualizarLista () {
     }
 }
 
-function sorterAmigo () {
+function sortearAmigo () {
     if (amigos.length > 0) {
         let indiceAleatorio = Math.floor(Math.random() * amigos.length);
         let amigoSorteado = amigos[indiceAleatorio];
