@@ -13,7 +13,7 @@ function agregarAmigo() {
         inputAmigo.value = '';
     
         actualizarLista ();
-       listaAmigos.innerHTML = " ";
+
     } else {
         alert ("Por favor, ingrese un nombre")
    } 
