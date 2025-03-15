@@ -43,9 +43,9 @@ function sortearAmigo() {
         let opcionesValidas = amigosRestantes.filter(a => a !== amigo);
         
         if (opcionesValidas.length === 0) {
-            return sortearAmigo(); // Reiniciar el sorteo si no hay opciones válidas
+            return sortearAmigo(); 
         }
-     }
+     
      let elegido = opcionesValidas[Math.floor(Math.random() * opcionesValidas.length)];
          asignaciones[amigo] = elegido;
          amigosRestantes = amigosRestantes.filter(a => a !== elegido);
@@ -54,7 +54,8 @@ function sortearAmigo() {
     resultado.innerHTML = Object.entries(asignaciones)
     .map(([amigo, sorteado]) => `${amigo} ha sorteado a ${sorteado}`)
     .join('<br>');
-}         
+}
+         
 
 
 
