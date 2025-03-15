@@ -34,29 +34,33 @@ function sortearAmigo () {
         resultado.innerHTML = 'No hay amigos en la lista';
         return;
     }
-    let amigosRestantes = amigos.filter(amigo => !sorteados.includes(amigo));
-
-    if (amigosRestantes.length === 0) {
+    if (sorteados.length === amigos.length) {
         resultado.innerHTML = '¡Todos los amigos ya han sido sorteados!';
         return;
     }
+    let amigosRestantes = [...amigos];
 
-    let indiceAleatorio = Math.floor(Math.random() * amigosRestantes.length);
-    let amigoSorteado = amigosRestantes[indiceAleatorio];
+    sorteados = [];
+    let mensajes = [];
+    for (let i = 0; i < amigos.length; i++) {
+        let indiceAleatorio = Math.floor(Math.random() * amigosRestantes.length);
+        let amigoSorteado = amigosRestantes.splice(indiceAleatorio, 1)[0];
+        sorteados.push(amigoSorteado);
+        mensajes.push(`${amigos[i]} ha sorteado a ${amigoSorteado}`);
+    }
 
-    sorteados.push(amigoSorteado); // Marcamos al amigo como sorteado
-    resultado.innerHTML = `Su amigo secreto es: ${amigoSorteado}`;
-        
-  if (sorteados.length === amigos.length) {
-            finalizarSorteo();
-                
-  }
-} 
+    resultado.innerHTML = mensajes.join('<br>');
+ 
 
-function finalizarSorteo() {
-    resultado.innerHTML = '¡Todos los amigos han sido sorteados! El sorteo ha finalizado.';
+    if (sorteados.length === amigos.length) {
+        finalizarSorteo();
+    }
 }
   
+function finalizarSorteo() {
+        resultado.innerHTML += '<br>¡Todos los amigos han sido sorteados! El sorteo ha finalizado.';
+}
+    
 
 
 
