@@ -7,7 +7,7 @@ let resultado = document.getElementById('resultado');
 function agregarAmigo() {
     let nombre = inputAmigo.value.trim();
     
-    if (nombre !== '') {
+    if (nombre !== '' && !amigos.includes(nombre)) {
 
         amigos.push(nombre);
 
@@ -29,36 +29,30 @@ function actualizarLista () {
     }
 }
 
-function sortearAmigo () {
-    if (amigos.length === 0) {
-        resultado.innerHTML = 'No hay amigos en la lista';
+function sortearAmigo() {
+    if (amigos.length < 2) {
+        resultado.innerHTML = 'Debe haber al menos dos amigos en la lista para sortear';
         return;
     }
-    if (sorteados.length === amigos.length) {
-        resultado.innerHTML = '¡Todos los amigos ya han sido sorteados!';
-        return;
-    }
+
+    let asignaciones = {};
     let amigosRestantes = [...amigos];
 
-    sorteados = [];
-    let mensajes = [];
-    for (let i = 0; i < amigos.length; i++) {
-        let indiceAleatorio = Math.floor(Math.random() * amigosRestantes.length);
-        let amigoSorteado = amigosRestantes.splice(indiceAleatorio, 1)[0];
-        sorteados.push(amigoSorteado);
-        mensajes.push(`${amigos[i]} ha sorteado a ${amigoSorteado}`);
+    for (let amigo of amigos) {
+        let opcionesValidas = amigosRestantes.filter(a => a !== amigo);
+        
+        if (opcionesValidas.length === 0) {
+            return sortearAmigo(); // Reiniciar el sorteo si no hay opciones válidas
+        }
+        
+        let elegido = opcionesValidas[Math.floor(Math.random() * opcionesValidas.length)];
+        asignaciones[amigo] = elegido;
+        amigosRestantes = amigosRestantes.filter(a => a !== elegido);
     }
-
-    resultado.innerHTML = mensajes.join('<br>');
- 
-
-    if (sorteados.length === amigos.length) {
-        finalizarSorteo();
-    }
-}
-  
-function finalizarSorteo() {
-        resultado.innerHTML += '<br>¡Todos los amigos han sido sorteados! El sorteo ha finalizado.';
+    
+    resultado.innerHTML = Object.entries(asignaciones)
+        .map(([amigo, sorteado]) => `${amigo} ha sorteado a ${sorteado}`)
+        .join('<br>');
 }
     
 
