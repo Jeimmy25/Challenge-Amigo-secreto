@@ -3,7 +3,7 @@ let sorteados = [];
 let inputAmigo = document.getElementById('amigo');
 let listaAmigos = document.getElementById('listaAmigos');
 let resultado = document.getElementById('resultado');
-let parejas = [];
+
 
 function agregarAmigo() {
     let nombre = inputAmigo.value.trim();
@@ -23,49 +23,38 @@ function agregarAmigo() {
 
 function actualizarLista () {
     listaAmigos.innerHTML = "";
-    amigos.forEach(amigo => {
+    for (let i = 0; i < amigos.length; i++) {
         let li = document.createElement('li');
-        li.textContent = amigo;
+        li.textContent = amigos [i];
         listaAmigos.appendChild(li);
-    });
+    }
 }
 
-function sortearUno() {
+function sortearAmigo() {
     if (amigos.length < 2) {
         resultado.innerHTML = 'Debe haber al menos dos amigos en la lista para sortear';
         return;
     }
 
-    if (parejas.length === amigos.length - 1) {
-        resultado.innerHTML += '<br>El sorteo ha finalizado.';
-        return;
-    }
-    let opciones = [...amigos];
-    let elegido = null;
-    let amigo = opciones.shift();   
+    let asignaciones = {};
+    let amigosRestantes = [...amigos];  
 
-     for (let i = 0; i < opciones.length; i++) {
-        if (opciones[i] !== amigo) {
-            elegido = opciones[i];
-            opciones.splice(i, 1);
-            break;
+    for (let amigo of amigos) {
+        let opcionesValidas = amigosRestantes.filter(a => a !== amigo);
+        
+        if (opcionesValidas.length === 0) {
+            return sortearAmigo(); // Reiniciar el sorteo si no hay opciones válidas
         }
      }
-     if (elegido === null) {
-        resultado.innerHTML = 'Error en el sorteo. Reiniciando...';
-        return;
+     let elegido = opcionesValidas[Math.floor(Math.random() * opcionesValidas.length)];
+         asignaciones[amigo] = elegido;
+         amigosRestantes = amigosRestantes.filter(a => a !== elegido);
     }
     
-    parejas.push({ amigo, elegido });
-    amigos = opciones;
-
-     resultado.innerHTML += `<br>${amigo} ha sorteado a ${elegido}`;
-     actualizarLista ();
-    
-     if (parejas.length === amigos.length) {
-        setTimeout(() => resultado.innerHTML += '<br>El sorteo ha finalizado.', 1000);
-     }
-    }          
+    resultado.innerHTML = Object.entries(asignaciones)
+    .map(([amigo, sorteado]) => `${amigo} ha sorteado a ${sorteado}`)
+    .join('<br>');
+}         
 
 
 
