@@ -1,4 +1,5 @@
 let amigos =[];
+let sorteados = [];
 let inputAmigo = document.getElementById('amigo');
 let listaAmigos = document.getElementById('listaAmigos');
 let resultado = document.getElementById('resultado');
@@ -7,7 +8,7 @@ function agregarAmigo() {
     let nombre = inputAmigo.value.trim();
     
     if (nombre !== '') {
-        //// Añadimos el nombre al arreglo de amigos
+
         amigos.push(nombre);
 
         inputAmigo.value = '';
@@ -29,20 +30,32 @@ function actualizarLista () {
 }
 
 function sortearAmigo () {
-    if (amigos.length > 0) {
-        let indiceAleatorio = Math.floor(Math.random() * amigos.length);
-        let amigoSorteado = amigos[indiceAleatorio];
-        resultado.innerHTML = `Su amigo secreto es: ${amigoSorteado}`;
-  } else {
-    resultado.innerHTML = 'No hay amigos en la lista';
-  }
-}
-  
+    if (amigos.length === 0) {
+        resultado.innerHTML = 'No hay amigos en la lista';
+        return;
+    }
+    let amigosRestantes = amigos.filter(amigo => !sorteados.includes(amigo));
+
+    if (amigosRestantes.length === 0) {
+        resultado.innerHTML = '¡Todos los amigos ya han sido sorteados!';
+        return;
+    }
+
+    let indiceAleatorio = Math.floor(Math.random() * amigosRestantes.length);
+    let amigoSorteado = amigosRestantes[indiceAleatorio];
+
+    sorteados.push(amigoSorteado); // Marcamos al amigo como sorteado
+    resultado.innerHTML = `Su amigo secreto es: ${amigoSorteado}`;
         
-  
-  
+  if (sorteados.length === amigos.length) {
+            finalizarSorteo();
+                
+  }
+} 
 
-
+function finalizarSorteo() {
+    resultado.innerHTML = '¡Todos los amigos han sido sorteados! El sorteo ha finalizado.';
+}
   
 
 
