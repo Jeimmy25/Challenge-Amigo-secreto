@@ -56,7 +56,7 @@ function sortearUno() {
         return;
     }
     
-    parejas.push({ amigo, elegido });)
+    parejas.push({ amigo, elegido });
     amigos = opciones;
 
      resultado.innerHTML += `<br>${amigo} ha sorteado a ${elegido}`;
